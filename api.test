@@ -1,0 +1,15 @@
+$ curl http://localhost:8080/status
+>
+>2 //
+>= 0
+
+$ curl http://localhost:8080/index | jq --sort-keys --compact-output 'sort_by(.id)'
+> /\[{"createdAt":".+","dueDate":(null|".+"),"id":1,"status":"Available","title":""},{"createdAt":".+","dueDate":(null|".+"),"id":2,"status":"Available","title":"Book"}\]/
+>2 //
+>= 0
+
+$ (curl --request POST http://localhost:8080/borrow/1/1 | jq --sort-keys --compact-output) && (curl --request POST http://localhost:8080/return/1/1 | jq --sort-keys --compact-output)
+> /{"createdAt":".+","dueDate":".+","id":1,"status":"Borrowed","title":""}
+{"createdAt":".+","dueDate":(null|".+"),"id":1,"status":"Available","title":""}/
+>2 //
+>= 0
