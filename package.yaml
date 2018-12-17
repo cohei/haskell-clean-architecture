@@ -1,0 +1,61 @@
+name:                haskell-clean-architecture
+version:             0.1.0.0
+github:              "cohei/haskell-clean-architecture"
+license:             BSD3
+author:              "TANIGUCHI Kohei"
+maintainer:          "a.d.xvii.kal.mai@gmail.com"
+copyright:           "2018 TANIGUCHI Kohei"
+
+description:         Please see the README on GitHub at <https://github.com/cohei/haskell-clean-architecture#readme>
+
+ghc-options:
+  - -Wall
+  - -Wcompat
+  - -Wincomplete-uni-patterns
+  - -Wincomplete-record-updates
+  - -Wredundant-constraints
+  - -Wnoncanonical-monad-instances
+  - -fdefer-typed-holes
+
+dependencies:
+  - base >= 4.7 && < 5
+  - time
+
+internal-libraries:
+  entity:
+    source-dirs: src/entity
+  use-case:
+    source-dirs: src/use-case
+    dependencies:
+      - exceptions
+      - extra
+
+      - entity
+  interface-adaptor:
+    source-dirs: src/interface-adaptor
+    dependencies:
+      - aeson
+      - bytestring
+      - capability
+      - containers
+      - exceptions
+      - http-api-data
+      - mtl
+      - servant
+      - servant-server
+
+      - entity
+      - use-case
+
+executables:
+  http-server:
+    main: Main.hs
+    source-dirs: app
+    dependencies:
+      - warp
+
+      - interface-adaptor
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N

@@ -4,7 +4,10 @@ stdenv.mkDerivation rec {
   env = buildEnv { name = name; paths = buildInputs; };
   buildInputs = [
     curl
+    gcc
     haskellPackages.shelltestrunner
     jq
+    libiconv
+    stack
   ];
 }

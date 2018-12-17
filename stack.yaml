@@ -1,0 +1,4 @@
+resolver: lts-13.6
+extra-deps:
+  - capability-0.1.0.0
+  - generic-lens-1.0.0.2 # for capability
