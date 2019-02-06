@@ -3,11 +3,10 @@
 with pkgs;
 mkShell {
   buildInputs = [
+    cabal-install
     curl
-    gcc
+    ghc
     haskellPackages.shelltestrunner
     jq
-    libiconv
-    stack
   ];
 }
