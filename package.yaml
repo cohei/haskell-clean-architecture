@@ -9,12 +9,10 @@ copyright:           "2018 TANIGUCHI Kohei"
 description:         Please see the README on GitHub at <https://github.com/cohei/haskell-clean-architecture#readme>
 
 ghc-options:
-  - -Wall
-  - -Wcompat
-  - -Wincomplete-uni-patterns
-  - -Wincomplete-record-updates
-  - -Wredundant-constraints
-  - -Wnoncanonical-monad-instances
+  - -Weverything
+  - -Wno-implicit-prelude
+  - -Wno-safe
+  - -Wno-unsafe
   - -fdefer-typed-holes
 
 dependencies:

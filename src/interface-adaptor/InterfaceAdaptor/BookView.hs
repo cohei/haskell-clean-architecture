@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -Wno-missing-import-lists #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE TupleSections    #-}
 module InterfaceAdaptor.BookView (BookView(BookView), fromBook) where
