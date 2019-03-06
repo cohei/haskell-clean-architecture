@@ -14,7 +14,7 @@ import           Data.Proxy                (Proxy (Proxy))
 import           Servant.API               ((:<|>) ((:<|>)),
                                             NoContent (NoContent))
 import           Servant.Server            (Application, Handler (Handler),
-                                            ServantErr (errBody), ServerT,
+                                            ServerError (errBody), ServerT,
                                             err400, err404, err412, hoistServer,
                                             serve)
 
@@ -67,7 +67,7 @@ return userId bookId = fromBook =<< R.return userId bookId
 cannotBorrowHandler :: MonadThrow m => E.Handler m a
 cannotBorrowHandler = E.Handler $ throwM . convertError
   where
-    convertError :: CannotBorrow -> ServantErr
+    convertError :: CannotBorrow -> ServerError
     convertError TooManyBooks = err400 { errBody = "Too many books checked out" }
     convertError Overdue      = err400 { errBody = "You have books overdue!" }
     convertError Lent         = err412 { errBody = "Sorry, this book is not available" }
@@ -75,6 +75,6 @@ cannotBorrowHandler = E.Handler $ throwM . convertError
 notFoundHandler :: MonadThrow m => E.Handler m a
 notFoundHandler = E.Handler $ throwM . convertError
   where
-    convertError :: NotFound -> ServantErr
+    convertError :: NotFound -> ServerError
     convertError BookNotFound = err404 { errBody = "Could not find book" }
     convertError UserNotFound = err404 { errBody = "Could not find user" }
