@@ -1,4 +1,4 @@
-name:                haskell-clean-architecture
+name:                library
 version:             0.1.0.0
 github:              "cohei/haskell-clean-architecture"
 license:             BSD3
@@ -6,7 +6,7 @@ author:              "TANIGUCHI Kohei"
 maintainer:          "a.d.xvii.kal.mai@gmail.com"
 copyright:           "2018 TANIGUCHI Kohei"
 
-description:         Please see the README on GitHub at <https://github.com/cohei/haskell-clean-architecture#readme>
+description:         Please see the README on GitHub at <https://github.com/cohei/haskell-clean-architecture/tree/master/library#readme>
 
 ghc-options:
   - -Weverything
