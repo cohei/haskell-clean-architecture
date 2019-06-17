@@ -1,5 +1,3 @@
-/*.cabal
-/.ghc*
-/cabal.project.local
+/haskell-clean-architecture.cabal
+/.ghc.environment.*
 /dist-newstyle/
-/dist/
