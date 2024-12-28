@@ -35,6 +35,7 @@ import Data.IntMap qualified as M
     lookup,
     singleton,
   )
+import Data.Maybe (listToMaybe, fromJust)
 import Data.Set (Set)
 import Data.Set qualified as S (empty, filter, insert, toList)
 import Data.Time.Clock (UTCTime, getCurrentTime)
@@ -123,11 +124,14 @@ instance LendingRepository InMemory where
       isTarget lending = L.user lending == user && L.book lending == book
 
 instance Identify Book InMemory where
-  identify book = gets @"bookStore" $ Id . head . M.keys . M.filter (== book)
+  identify book = gets @"bookStore" $ Id . elemKey book
 
   query = gets @"bookStore" . M.lookup . coerce
 
 instance Identify User InMemory where
-  identify user = gets @"userStore" $ Id . head . M.keys . M.filter (== user)
+  identify user = gets @"userStore" $ Id . elemKey user
 
   query = gets @"userStore" . M.lookup . coerce
+
+elemKey :: Eq a => a -> IntMap a -> Int
+elemKey v = fromJust . listToMaybe . M.keys . M.filter (== v)

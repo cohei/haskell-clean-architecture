@@ -18,10 +18,8 @@ source-repository head
 common common
   build-depends: base >= 4.7 && < 5
   ghc-options:
-      -Weverything
-      -Wno-implicit-prelude
-      -Wno-safe
-      -Wno-unsafe
+      -Wall
+      -Wcompat
       -fdefer-typed-holes
 
 library entity
