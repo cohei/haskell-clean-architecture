@@ -1,17 +1,20 @@
-{-# LANGUAGE DeriveAnyClass   #-}
+{-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE FlexibleContexts #-}
+
 module UseCase.Query
-  ( queryBook, queryUser
-  , NotFound(BookNotFound, UserNotFound)
-  ) where
+  ( queryBook,
+    queryUser,
+    NotFound (BookNotFound, UserNotFound),
+  )
+where
 
-import           Control.Exception   (Exception)
-import           Control.Monad       ((<=<))
-import           Control.Monad.Catch (MonadThrow (throwM))
+import Control.Exception (Exception)
+import Control.Monad ((<=<))
+import Control.Monad.Catch (MonadThrow (throwM))
 
-import           Entity.Book         (Book)
-import           Entity.User         (User)
-import           UseCase.Identify    (Id, Identify (query))
+import Entity.Book (Book)
+import Entity.User (User)
+import UseCase.Identify (Id, Identify (query))
 
 queryBook :: (MonadThrow m, Identify Book m) => Id Book -> m Book
 queryBook = maybeThrow BookNotFound <=< query
@@ -22,6 +25,7 @@ queryUser = maybeThrow UserNotFound <=< query
 maybeThrow :: (Exception e, MonadThrow m) => e -> Maybe a -> m a
 maybeThrow e = maybe (throwM e) pure
 
-data NotFound =
-  UserNotFound | BookNotFound
+data NotFound
+  = UserNotFound
+  | BookNotFound
   deriving (Show, Exception)
