@@ -9,7 +9,7 @@ module InterfaceAdaptor.API (API, HealthCheck, Library) where
 import           Data.Aeson                (ToJSON)
 import           GHC.Generics              (Generic)
 import           Servant.API               ((:<|>), (:>), Capture, Get,
-                                            GetNoContent, JSON, NoContent, Post)
+                                            GetNoContent, JSON, Post)
 import           Web.HttpApiData           (FromHttpApiData)
 
 import           Entity.Book               (Book)
@@ -19,7 +19,7 @@ import           UseCase.Identify          (Id (Id))
 
 type API = Library :<|> HealthCheck
 
-type HealthCheck = "status" :> GetNoContent '[JSON] NoContent
+type HealthCheck = "status" :> GetNoContent
 
 type Library =
   "index" :> Get '[JSON] [BookView] :<|>

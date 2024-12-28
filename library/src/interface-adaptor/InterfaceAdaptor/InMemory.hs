@@ -11,6 +11,8 @@
 module InterfaceAdaptor.InMemory (InMemory, runInMemory, Env, initialEnv) where
 
 import           Capability.Reader         (MonadReader (MonadReader))
+import           Capability.Sink           (HasSink)
+import           Capability.Source         (HasSource)
 import           Capability.State          (Field (Field), HasState,
                                             ReaderIORef (ReaderIORef), gets,
                                             modify)
@@ -37,11 +39,11 @@ import           UseCase.Identify (Id (Id), Identify (identify, query))
 newtype InMemory a = InMemory (IORef Env -> IO a)
   deriving (Functor, Applicative, Monad, MonadIO, MonadThrow)
     via ReaderT (IORef Env) IO
-  deriving (HasState "bookStore" BookStore)
+  deriving (HasSource "bookStore" BookStore, HasSink "bookStore" BookStore, HasState "bookStore" BookStore)
     via Field "bookStore" "env" (ReaderIORef (MonadReader (ReaderT (IORef Env) IO)))
-  deriving (HasState "userStore" UserStore)
+  deriving (HasSource "userStore" UserStore, HasSink "userStore" UserStore, HasState "userStore" UserStore)
     via Field "userStore" "env" (ReaderIORef (MonadReader (ReaderT (IORef Env) IO)))
-  deriving (HasState "lendingStore" LendingStore)
+  deriving (HasSource "lendingStore" LendingStore, HasSink "lendingStore" LendingStore, HasState "lendingStore" LendingStore)
     via Field "lendingStore" "env" (ReaderIORef (MonadReader (ReaderT (IORef Env) IO)))
 
 data Env =
