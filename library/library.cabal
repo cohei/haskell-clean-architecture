@@ -1,0 +1,83 @@
+cabal-version: 3.12
+
+name:           library
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/cohei/haskell-clean-architecture/tree/master/library#readme>
+homepage:       https://github.com/cohei/haskell-clean-architecture#readme
+bug-reports:    https://github.com/cohei/haskell-clean-architecture/issues
+author:         TANIGUCHI Kohei
+maintainer:     a.d.xvii.kal.mai@gmail.com
+copyright:      2018 TANIGUCHI Kohei
+license:        BSD-3-Clause
+build-type:     Simple
+
+source-repository head
+  type: git
+  location: https://github.com/cohei/haskell-clean-architecture
+
+common common
+  build-depends: base >= 4.7 && < 5
+  ghc-options:
+      -Weverything
+      -Wno-implicit-prelude
+      -Wno-safe
+      -Wno-unsafe
+      -fdefer-typed-holes
+
+library entity
+  import: common
+  exposed-modules:
+      Entity.Book
+      Entity.Lending
+      Entity.User
+  hs-source-dirs:
+      src/entity
+  build-depends:
+      time
+
+library use-case
+  import: common
+  exposed-modules:
+      UseCase.Borrowing
+      UseCase.Identify
+      UseCase.Query
+      UseCase.Returning
+  hs-source-dirs:
+      src/use-case
+  build-depends:
+      exceptions
+    , extra
+    , time
+    , library:entity
+
+library interface-adaptor
+  import: common
+  exposed-modules:
+      InterfaceAdaptor.API
+      InterfaceAdaptor.BookView
+      InterfaceAdaptor.InMemory
+      InterfaceAdaptor.Server
+  hs-source-dirs:
+      src/interface-adaptor
+  build-depends:
+      aeson
+    , capability
+    , containers
+    , exceptions
+    , http-api-data
+    , mtl
+    , servant
+    , servant-server
+    , time
+    , library:entity
+    , library:use-case
+
+executable http-server
+  import: common
+  main-is: Main.hs
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      warp
+    , library:interface-adaptor
