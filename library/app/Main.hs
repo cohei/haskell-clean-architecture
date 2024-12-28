@@ -1,9 +1,8 @@
 module Main (main) where
 
-import           Network.Wai.Handler.Warp  (run)
-
-import           InterfaceAdaptor.InMemory (initialEnv)
-import           InterfaceAdaptor.Server   (application)
+import InterfaceAdaptor.InMemory (initialEnv)
+import InterfaceAdaptor.Server (application)
+import Network.Wai.Handler.Warp (run)
 
 main :: IO ()
 main = run 8080 . application =<< initialEnv

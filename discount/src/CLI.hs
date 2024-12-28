@@ -1,10 +1,14 @@
 module CLI (cli) where
 
-import           Control.Monad.IO.Class (MonadIO (liftIO))
-import           System.IO              (hFlush, stdout)
+import Control.Monad.IO.Class (MonadIO (liftIO))
+import System.IO (hFlush, stdout)
 
-import           Discounter             (Amount, Discount, RateRepository,
-                                         discount)
+import Discounter
+  ( Amount,
+    Discount,
+    RateRepository,
+    discount,
+  )
 
 cli :: (RateRepository m, MonadIO m) => m ()
 cli = do

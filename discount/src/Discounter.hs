@@ -1,6 +1,7 @@
-{-# LANGUAGE DerivingStrategies         #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
-module Discounter (Amount, Discount, Rate, discount, RateRepository(rate)) where
+
+module Discounter (Amount, Discount, Rate, discount, RateRepository (rate)) where
 
 newtype Amount = Amount Double
   deriving newtype (Eq, Ord, Num, Read)
